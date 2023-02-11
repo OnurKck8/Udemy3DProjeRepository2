@@ -10,6 +10,7 @@ namespace UdemyProject2.Controllers
 {
     public class PlayerController : MonoBehaviour
     {
+        [SerializeField] float _moveBoundary = 4.5f;
         [SerializeField] float _newSpeed = 10f;
         [SerializeField] float _jumpForce = 100f;
 
@@ -18,6 +19,10 @@ namespace UdemyProject2.Controllers
         IInputReader _input;
         float _horizontal;
         bool _isJump;
+
+        public float MoveSpeed => _newSpeed;
+        public float MoveBoundary => _moveBoundary;
+
 
         private void Awake()
         {
@@ -37,7 +42,7 @@ namespace UdemyProject2.Controllers
 
         private void FixedUpdate()
         {
-            _horizontalMover.TickFixed(_horizontal,_newSpeed);
+            _horizontalMover.TickFixed(_horizontal);
 
             if(_isJump)
             {
