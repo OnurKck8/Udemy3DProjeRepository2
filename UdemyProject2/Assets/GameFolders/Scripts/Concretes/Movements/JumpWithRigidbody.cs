@@ -8,6 +8,7 @@ namespace UdemyProject2.Movements
     public class JumpWithRigidbody
     {
         Rigidbody _rigidbody;
+        public bool CanJump => _rigidbody.velocity.y != 0f;
 
         public JumpWithRigidbody(PlayerController playerController)
         {
@@ -16,7 +17,7 @@ namespace UdemyProject2.Movements
 
         public void TickFixed(float jumpForce)
         {
-            if (_rigidbody.velocity.y != 0)
+            if (CanJump)
             {
                 return;
             }
