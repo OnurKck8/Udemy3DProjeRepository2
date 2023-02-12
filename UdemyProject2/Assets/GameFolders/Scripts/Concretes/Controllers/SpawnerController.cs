@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UdemyProject2.Enums;
 using UdemyProject2.Managers;
 using UnityEngine;
 
@@ -13,6 +14,10 @@ namespace UdemyProject2.Controllers
 
         float _maxSpawnTime = 10f;
         float _currentSpawnTime = 0f;
+        int _index = 0;
+        float _maxAddEnemyTime;
+
+        public bool CanIncrease =>_index < EnemyManager.Instance.Count;
 
         void OnEnable()
         {
@@ -27,14 +32,27 @@ namespace UdemyProject2.Controllers
             {
                 Spawn();
             }
+
+            if(!CanIncrease)
+            {
+                return;
+            }
+
+            if(_maxAddEnemyTime<Time.time)
+            {
+                _maxAddEnemyTime = Time.time + EnemyManager.Instance.AddDelayTime;
+                IncreaseIndex();
+            }
         }
+
+      
 
         void Spawn()
         {
-            EnemyController newenemy = EnemyManager.Instance.GetPool();
-            newenemy.transform.parent = this.transform;
-            newenemy.transform.position = this.transform.position;
-            newenemy.gameObject.SetActive(true);
+            EnemyController newEnemy = EnemyManager.Instance.GetPool((EnemyEnum)Random.Range(0,_index));
+            newEnemy.transform.parent = this.transform;
+            newEnemy.transform.position = this.transform.position;
+            newEnemy.gameObject.SetActive(true);
 
             _currentSpawnTime = 0f;
             GetRandomMaxTime();
@@ -43,6 +61,16 @@ namespace UdemyProject2.Controllers
         {
             _maxSpawnTime = Random.Range(_min, _max);
         }
+
+        void IncreaseIndex()
+        {
+            if (CanIncrease)
+            {
+                _index++;
+            }
+        }
+
+      
     }
 
 }
