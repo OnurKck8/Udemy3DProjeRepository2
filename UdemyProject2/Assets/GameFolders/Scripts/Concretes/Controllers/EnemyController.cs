@@ -1,21 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
+using UdemyProject2.Abstracts.Controllers;
 using UdemyProject2.Managers;
 using UdemyProject2.Movements;
 using UnityEngine;
 
 namespace UdemyProject2.Controllers
 {
-    public class EnemyController : MonoBehaviour
+    public class EnemyController : MyCharacterController, IEntityController
     {
-        VerticalMover _verticalMover;
-        float _currenLifeTime=0f;
-
-        [SerializeField] float _moveSpeed=10f;
+        
         [SerializeField] float _maxLifeTime=10f;
 
+        VerticalMover _verticalMover;
+        float _currenLifeTime = 0f;
 
-        public float MoveSpeed => _moveSpeed;
+        public Transform MyProperty => throw new System.NotImplementedException();
 
         private void Awake()
         {
