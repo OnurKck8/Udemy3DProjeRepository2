@@ -61,6 +61,7 @@ namespace UdemyProject2.Controllers
         private void OnTriggerEnter(Collider other)
         {
             EnemyController enemyController = other.GetComponent<EnemyController>();
+
             if (enemyController != null)
             {
                 _isDead = true;
