@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UdemyProject2.Abstracts.Utilities;
+using UdemyProject2.ScripTableObjects;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -8,8 +9,30 @@ namespace UdemyProject2.Managers
 {
     public class GameManager : SingletonBehaviorObject<GameManager>
     {
+        [SerializeField] LevelDifficultyData[] _levelDifficultyDatas;
+
+        public LevelDifficultyData LevelDifficultyData => _levelDifficultyDatas[DifficultyIndex];
 
         public event System.Action OnGameStop;
+
+        int _difficultyIndex;
+
+        public int DifficultyIndex
+        {
+            get => _difficultyIndex;
+
+            set
+            {
+                if(_difficultyIndex<0 || _difficultyIndex>_levelDifficultyDatas.Length)
+                {
+                    LoadSceneAsync("Menu");
+                }
+                else
+                {
+                    _difficultyIndex = value;
+                }
+            }
+        }
 
         private void Awake()
         {
@@ -24,6 +47,7 @@ namespace UdemyProject2.Managers
 
         public void LoadScene(string sceneName)
         {
+           
             StartCoroutine(LoadSceneAsync(sceneName));
         }
 

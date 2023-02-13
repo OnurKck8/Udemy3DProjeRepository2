@@ -11,7 +11,10 @@ namespace UdemyProject2.Managers
     {
         [SerializeField] float _addDelayTÝme = 50f;
         [SerializeField] EnemyController[] _enemyPrefabs;
+
         Dictionary<EnemyEnum, Queue<EnemyController>> _enemies = new Dictionary<EnemyEnum, Queue<EnemyController>>();
+
+        float _moveSpeed;
 
         public float AddDelayTime => _addDelayTÝme;
 
@@ -64,13 +67,24 @@ namespace UdemyProject2.Managers
                 for (int i=0; i<2; i++)
                 {
                     EnemyController newEnemy = Instantiate(_enemyPrefabs[(int)enemyType]);
+                    newEnemy.gameObject.SetActive(false);
                     enemyControllers.Enqueue(newEnemy);
-                }
-                
+                }            
             }
-            return enemyControllers.Dequeue();
+            EnemyController enemyController = enemyControllers.Dequeue();
+            enemyController.SetMoveSpeed(_moveSpeed);
+            return enemyController;
         }
 
+        public void SetMoveSpeed(float moveSpeed)
+        {
+            _moveSpeed = moveSpeed;
+        }
+
+        public void SetAddDelayTime(float addDelayTime)
+        {
+            _addDelayTÝme = addDelayTime;
+        }
     }
 
     
